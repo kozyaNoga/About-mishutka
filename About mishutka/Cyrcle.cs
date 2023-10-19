@@ -19,10 +19,10 @@ namespace About_mishutka
             this.countVertex = countVertex;
             vertices = new float[countVertex * 3];
             colors = new float[countVertex * 4];
-            for (int i = 0; i < countVertex * 3;)
+            for (int i = 0, j = 0; i < countVertex * 3; j++)
             {
-                float x = radius * (float)Math.Cos(i * ((2.0f * (float)Math.PI) / countVertex));
-                float y = radius * (float)Math.Sin(i * ((2.0f * (float)Math.PI) / countVertex));
+                float x = radius * (float)Math.Cos(j * ((2.0f * (float)Math.PI) / countVertex));
+                float y = radius * (float)Math.Sin(j * ((2.0f * (float)Math.PI) / countVertex));
                 vertices[(i / 3) * 3] = x;
                 vertices[(i / 3) * 3 + 1] = y;
                 i += 3;
