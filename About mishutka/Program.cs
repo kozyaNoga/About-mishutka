@@ -8,13 +8,16 @@ using OpenTK.Graphics.OpenGL;
 using OpenTK.Windowing.Common;
 using OpenTK.Windowing.Desktop;
 using OpenTK.Mathematics;
+using About_mishutka;
 
 namespace ConsoleApp1
 {
     public class Game : GameWindow
     {
+        private Cyrcle cyrcle = new Cyrcle(20, 0.7f);
         private float i = 0.01f, sec = 0.0f;
         private int fps;
+        private float x = 0.0f;
         private int VBOVertex, VBOColor;
         private float[] vertices = new float[]
         {
@@ -41,7 +44,8 @@ namespace ConsoleApp1
             GL.ClearColor(0 / 0.0f, 0 / 0.0f, 0 / 0.0f, 0 / 0.0f);
             GL.Enable(EnableCap.CullFace);
             GL.CullFace(CullFaceMode.Back);
-            initVertexBufferObject();
+            cyrcle.initVertexBufferObject();
+            //initVertexBufferObject();
         }
         protected override void OnResize(ResizeEventArgs e)
         {
@@ -50,6 +54,7 @@ namespace ConsoleApp1
         protected override void OnUpdateFrame(FrameEventArgs args)
         {
             sec += (float)args.Time;
+            x += 0.01f;
             if (sec >= 1.0f)
             {
                 Title = $"Linear Algebra: fps - {(float)fps}";
@@ -63,13 +68,15 @@ namespace ConsoleApp1
         protected override void OnRenderFrame(FrameEventArgs args)
         {
             GL.Clear(ClearBufferMask.ColorBufferBit);
-            DrawVertexBufferObject();
+            cyrcle.DrawVertexBufferObject();
+            //DrawVertexBufferObject();
             SwapBuffers();
             base.OnRenderFrame(args);
         }
         protected override void OnUnload()
         {
-            DeleteVertexBufferObject();
+            cyrcle.DeleteVertexBufferObject();
+            //DeleteVertexBufferObject();
             base.OnUnload();
         }
 
