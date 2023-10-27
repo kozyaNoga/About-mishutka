@@ -14,14 +14,25 @@ namespace About_mishutka
 {
     class Model
     {
+        // Кол-во вертексов объекта.
         protected int countVertex;
+
+        // Указатели на Буфферы веотексов и цвета. 
         protected int VBOVertex, VBOColor;
-        public float[] vertices;
-        public float[] colors;           
+
+        // Массивы вертеквос и цвета.
+        protected float[] vertices;
+        protected float[] colors;    
+        
+
+
+        // Конструктор объекта.
         public Model(int countVertex)
         {
             this.countVertex = countVertex;
         }
+        
+        // Создание Буффера вертексов.
         public int CreateVertexBufferObject(float[] data)
         {
             int indexVBO = GL.GenBuffer();
@@ -30,11 +41,15 @@ namespace About_mishutka
             GL.BindBuffer(BufferTarget.ArrayBuffer, 0);
             return indexVBO;
         }
+        
+        // Инициализация Буфферов
         public void initVertexBufferObject()
         {
             VBOVertex = CreateVertexBufferObject(vertices);
             VBOColor = CreateVertexBufferObject(colors);
         }
+        
+        // Отрисовка объетка.
         public void DrawVertexBufferObject()
         {
             GL.EnableClientState(ArrayCap.VertexArray);
@@ -52,6 +67,8 @@ namespace About_mishutka
             GL.DisableClientState(ArrayCap.VertexArray);
             GL.DisableClientState(ArrayCap.ColorArray);
         }
+
+        // Удаление объекта.
         public void DeleteVertexBufferObject()
         {
             GL.DeleteBuffer(VBOVertex);

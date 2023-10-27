@@ -9,16 +9,16 @@ using OpenTK.Windowing.Common;
 using OpenTK.Windowing.Desktop;
 using OpenTK.Mathematics;
 using About_mishutka;
+using OpenTK.Windowing.GraphicsLibraryFramework;
 
 namespace ConsoleApp1
 {
     public class Game : GameWindow
     {
-        private Cyrcle cyrcle = new Cyrcle(1000, 0.4f);
-        private Cyrcle cyrcle1 = new Cyrcle(8, 0.2f);
         private float i = 0.01f, sec = 0.0f;
         private int fps;
-
+        private bool flag = false;
+        Circle circle = new Circle(17, 0.5f, 0.0f, 0.0f);
         public Game(GameWindowSettings GWsettings, NativeWindowSettings NWsettings) : base(GWsettings, NWsettings)
         {
             VSync = VSyncMode.On;
@@ -29,8 +29,7 @@ namespace ConsoleApp1
             GL.ClearColor(0 / 0.0f, 0 / 0.0f, 0 / 0.0f, 0 / 0.0f);
             GL.Enable(EnableCap.CullFace);
             GL.CullFace(CullFaceMode.Back);
-            cyrcle.initVertexBufferObject();
-            cyrcle1.initVertexBufferObject();
+            circle.initVertexBufferObject();
         }
         protected override void OnResize(ResizeEventArgs e)
         {
@@ -46,20 +45,20 @@ namespace ConsoleApp1
                 sec = 0.0f;
             }
             fps += 1;
+
             base.OnUpdateFrame(args);
         }
         protected override void OnRenderFrame(FrameEventArgs args)
         {
             GL.Clear(ClearBufferMask.ColorBufferBit);
-            cyrcle.DrawVertexBufferObject();
-            cyrcle1.DrawVertexBufferObject();
+            circle.DrawVertexBufferObject();
+
             SwapBuffers();
             base.OnRenderFrame(args);
         }
         protected override void OnUnload()
         {
-            cyrcle.DeleteVertexBufferObject();
-            cyrcle1.DeleteVertexBufferObject();
+            
             base.OnUnload();
         }
     }
@@ -69,7 +68,7 @@ namespace ConsoleApp1
         {
             NativeWindowSettings NWsettings = new NativeWindowSettings()
             {
-                Size = new Vector2i(800, 600),
+                Size = new Vector2i(800, 800),
                 //Location = new Vector2i(0, 0),
                 WindowBorder = WindowBorder.Fixed,
                 WindowState = WindowState.Normal,

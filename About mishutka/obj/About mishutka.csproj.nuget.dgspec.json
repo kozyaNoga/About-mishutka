@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\shlon\\source\\repos\\About mishutka\\About mishutka\\About mishutka.csproj": {}
+    "C:\\Users\\shlon\\source\\repos\\About Mishutka\\About mishutka\\About mishutka.csproj": {}
   },
   "projects": {
-    "C:\\Users\\shlon\\source\\repos\\About mishutka\\About mishutka\\About mishutka.csproj": {
+    "C:\\Users\\shlon\\source\\repos\\About Mishutka\\About mishutka\\About mishutka.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\shlon\\source\\repos\\About mishutka\\About mishutka\\About mishutka.csproj",
+        "projectUniqueName": "C:\\Users\\shlon\\source\\repos\\About Mishutka\\About mishutka\\About mishutka.csproj",
         "projectName": "About mishutka",
-        "projectPath": "C:\\Users\\shlon\\source\\repos\\About mishutka\\About mishutka\\About mishutka.csproj",
+        "projectPath": "C:\\Users\\shlon\\source\\repos\\About Mishutka\\About mishutka\\About mishutka.csproj",
         "packagesPath": "C:\\Users\\shlon\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\shlon\\source\\repos\\About mishutka\\About mishutka\\obj\\",
+        "outputPath": "C:\\Users\\shlon\\source\\repos\\About Mishutka\\About mishutka\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

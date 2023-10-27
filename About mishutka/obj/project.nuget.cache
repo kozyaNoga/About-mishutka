@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "/mm2OvMijB51XYvd2PJNNUolkBa6I0XeFQunVbMXk/1URtHvpQ8ySJQh0F+VfS1HHOA1pRj1NJxVhxiiqMTM2Q==",
+  "dgSpecHash": "/Am3St52IYGyt9ZY9kfTeA3W/UbasEyHUqagKlH6v6s/swucDXs/XDW+n8I7iwlax2vQGT/PC1Nn4IOsksXrhQ==",
   "success": true,
-  "projectFilePath": "C:\\Users\\shlon\\source\\repos\\About mishutka\\About mishutka\\About mishutka.csproj",
+  "projectFilePath": "C:\\Users\\shlon\\source\\repos\\About Mishutka\\About mishutka\\About mishutka.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\shlon\\.nuget\\packages\\opentk\\4.8.1\\opentk.4.8.1.nupkg.sha512",
     "C:\\Users\\shlon\\.nuget\\packages\\opentk.audio.openal\\4.8.1\\opentk.audio.openal.4.8.1.nupkg.sha512",
