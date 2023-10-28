@@ -12,7 +12,7 @@ using OpenTK.Mathematics;
 
 namespace About_mishutka
 {
-    class Circle : Model
+    class Circle : VBOModel
     {
         /*
         float y

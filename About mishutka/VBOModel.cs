@@ -12,28 +12,29 @@ using OpenTK.Mathematics;
 
 namespace About_mishutka
 {
-    class Model
+    // VBO (Vertex Buffer Object)
+    class VBOModel
     {
-        // Кол-во вертексов объекта.
+        // Кол-во вертексов объекта
         protected int countVertex;
 
-        // Указатели на Буфферы веотексов и цвета. 
+        // Указатели на Буфферы веотексов и цвета
         protected int VBOVertex, VBOColor;
 
-        // Массивы вертеквос и цвета.
+        // Массивы вертеквос и цвета
         protected float[] vertices;
         protected float[] colors;    
-        
 
 
-        // Конструктор объекта.
-        public Model(int countVertex)
+        // Конструктор объекта
+        public VBOModel(int countVertex)
         {
             this.countVertex = countVertex;
         }
+
         
-        // Создание Буффера вертексов.
-        public int CreateVertexBufferObject(float[] data)
+        // Создание Буффера вертексов
+        protected int CreateVertexBufferObject(float[] data)
         {
             int indexVBO = GL.GenBuffer();
             GL.BindBuffer(BufferTarget.ArrayBuffer, indexVBO);
@@ -49,7 +50,7 @@ namespace About_mishutka
             VBOColor = CreateVertexBufferObject(colors);
         }
         
-        // Отрисовка объетка.
+        // Отрисовка объетка
         public void DrawVertexBufferObject()
         {
             GL.EnableClientState(ArrayCap.VertexArray);
@@ -68,7 +69,7 @@ namespace About_mishutka
             GL.DisableClientState(ArrayCap.ColorArray);
         }
 
-        // Удаление объекта.
+        // Удаление объекта
         public void DeleteVertexBufferObject()
         {
             GL.DeleteBuffer(VBOVertex);

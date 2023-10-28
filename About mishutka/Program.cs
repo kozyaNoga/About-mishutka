@@ -10,6 +10,7 @@ using OpenTK.Windowing.Desktop;
 using OpenTK.Mathematics;
 using About_mishutka;
 using OpenTK.Windowing.GraphicsLibraryFramework;
+using System.Data;
 
 namespace ConsoleApp1
 {
@@ -18,7 +19,8 @@ namespace ConsoleApp1
         private float i = 0.01f, sec = 0.0f;
         private int fps;
         private bool flag = false;
-        Circle circle = new Circle(17, 0.5f, 0.0f, 0.0f);
+        Circle circle = new Circle(6, 0.5f, 0.0f, 0.0f);
+        Circle circle1 = new Circle(100, 0.5f, 0.0f, 0.0f);
         public Game(GameWindowSettings GWsettings, NativeWindowSettings NWsettings) : base(GWsettings, NWsettings)
         {
             VSync = VSyncMode.On;
@@ -30,6 +32,7 @@ namespace ConsoleApp1
             GL.Enable(EnableCap.CullFace);
             GL.CullFace(CullFaceMode.Back);
             circle.initVertexBufferObject();
+            circle1.initVertexBufferObject();
         }
         protected override void OnResize(ResizeEventArgs e)
         {
@@ -52,6 +55,7 @@ namespace ConsoleApp1
         {
             GL.Clear(ClearBufferMask.ColorBufferBit);
             circle.DrawVertexBufferObject();
+            circle1.DrawVertexBufferObject();
 
             SwapBuffers();
             base.OnRenderFrame(args);
