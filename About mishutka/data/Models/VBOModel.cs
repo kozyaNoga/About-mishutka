@@ -10,7 +10,7 @@ using OpenTK.Windowing.Common;
 using OpenTK.Windowing.Desktop;
 using OpenTK.Mathematics;
 
-namespace About_mishutka
+namespace About_mishutka.data.Models
 {
     // VBO (Vertex Buffer Object)
     class VBOModel
@@ -19,40 +19,36 @@ namespace About_mishutka
         protected int countVertex;
 
         // Указатели на Буфферы веотексов и цвета
-        protected int VBOVertex, VBOColor;
-
+        public int VBOVertex, VBOColor;
+        public PrimitiveType type;
         // Массивы вертеквос и цвета
         protected float[] vertices;
-        protected float[] colors;    
+        protected float[] colors;
 
-
-        // Конструктор объекта
-        public VBOModel(int countVertex)
-        {
-            this.countVertex = countVertex;
-        }
-
-        
         // Создание Буффера вертексов
         protected int CreateVertexBufferObject(float[] data)
         {
             int indexVBO = GL.GenBuffer();
             GL.BindBuffer(BufferTarget.ArrayBuffer, indexVBO);
-            GL.BufferData(BufferTarget.ArrayBuffer, data.Length * sizeof(float), data, BufferUsageHint.StaticDraw);
+            GL.BufferData(BufferTarget.ArrayBuffer, data.Length * sizeof(float), data, BufferUsageHint.DynamicDraw);
             GL.BindBuffer(BufferTarget.ArrayBuffer, 0);
             return indexVBO;
         }
-        
+
         // Инициализация Буфферов
         public void initVertexBufferObject()
         {
             VBOVertex = CreateVertexBufferObject(vertices);
             VBOColor = CreateVertexBufferObject(colors);
         }
-        
+
         // Отрисовка объетка
-        public void DrawVertexBufferObject()
+        public void DrawVertexBufferObject(PrimitiveType type)
         {
+            GL.BindBuffer(BufferTarget.ArrayBuffer, VBOVertex);
+            GL.BufferData(BufferTarget.ArrayBuffer, vertices.Length * sizeof(float), vertices, BufferUsageHint.DynamicDraw);
+            GL.BindBuffer(BufferTarget.ArrayBuffer, 0);
+
             GL.EnableClientState(ArrayCap.VertexArray);
             GL.EnableClientState(ArrayCap.ColorArray);
 
@@ -62,7 +58,7 @@ namespace About_mishutka
             GL.BindBuffer(BufferTarget.ArrayBuffer, VBOColor);
             GL.ColorPointer(4, ColorPointerType.Float, 0, 0);
 
-            GL.DrawArrays(PrimitiveType.LineLoop, 0, countVertex);
+            GL.DrawArrays(type, 0, countVertex);
 
             GL.BindBuffer(BufferTarget.ArrayBuffer, 0);
             GL.DisableClientState(ArrayCap.VertexArray);

@@ -9,8 +9,8 @@ using OpenTK.Graphics.OpenGL;
 using OpenTK.Windowing.Common;
 using OpenTK.Windowing.Desktop;
 using OpenTK.Mathematics;
-
-namespace About_mishutka
+//Не работает
+namespace About_mishutka.data.Models
 {
     // EBO (Element Buffer Object)
     class EBOModel
@@ -19,7 +19,7 @@ namespace About_mishutka
         private int inedex;
 
         // Массив элементов 
-        uint[] element = new uint[] 
+        uint[] element = new uint[]
         {
             0, 1, 2,
             2, 1, 3
@@ -34,7 +34,7 @@ namespace About_mishutka
         }
         public void DrawElementObject()
         {
-            
+
         }
     }
 }

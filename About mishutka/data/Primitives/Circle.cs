@@ -9,8 +9,9 @@ using OpenTK.Graphics.OpenGL;
 using OpenTK.Windowing.Common;
 using OpenTK.Windowing.Desktop;
 using OpenTK.Mathematics;
+using About_mishutka.data.Models;
 
-namespace About_mishutka
+namespace About_mishutka.data.Primitives
 {
     class Circle : VBOModel
     {
@@ -43,25 +44,26 @@ namespace About_mishutka
         // Пареметры
         private float x = 0.0f, y = 0.0f;
         private float radius;
-        
+
         // Просчёт вертексов
-        private void CalcultVertex()
+        protected void CalcultVertex()
         {
             for (int i = 0, j = 0; i < countVertex * 3; j++)
             {
-                float x = this.radius * (float)Math.Cos(j * ((2.0f * (float)Math.PI) / countVertex)) + this.x;
-                float y = this.radius * (float)Math.Sin(j * ((2.0f * (float)Math.PI) / countVertex)) + this.y;
-                vertices[(i / 3) * 3] = x;
-                vertices[(i / 3) * 3 + 1] = y;
+                float x = radius * (float)Math.Cos(j * (2.0f * (float)Math.PI / countVertex)) + this.x;
+                float y = radius * (float)Math.Sin(j * (2.0f * (float)Math.PI / countVertex)) + this.y;
+                vertices[i / 3 * 3] = x;
+                vertices[i / 3 * 3 + 1] = y;
                 i += 3;
             }
         }
 
         // Конструктор круга
-        public Circle(int countVertex, float radius, float x0, float y0) : base(countVertex)
+        public Circle(int countVertex, float radius, float x0, float y0)
         {
-            this.x = x0;
-            this.y = y0;
+            x = x0;
+            y = y0;
+            type = PrimitiveType.LineLoop;
             this.radius = radius;
             this.countVertex = countVertex;
             vertices = new float[countVertex * 3];
@@ -77,15 +79,21 @@ namespace About_mishutka
             this.x = x;
             this.y = y;
         }
-        
+
         // Анимация Кргуга
-        public void Animation(float max, float min)
+        public static void Animation(Circle a)
         {
-            if (this.radius < max) this.radius += 0.01f;
-            else if (this.radius > min) this.radius -= 0.01f;
-            CalcultVertex();
-            VBOVertex = CreateVertexBufferObject(vertices);
-            VBOColor = CreateVertexBufferObject(colors);
+            a.radius += 0.01f;
+            a.CalcultVertex();
+        }
+
+        //Создание объектов неотрывно связанны с миром (World). Все объекты могут существовать
+        //только в том или ином мире. Кроме персонажа.
+        // Поэтому мы фабричному методу передаем countObject.
+        public static Circle Create(int countVertex, float radius, float x0, float y0)
+        {
+            Circle a = new Circle(countVertex, radius, x0, y0);
+            return a;
         }
     }
 }
