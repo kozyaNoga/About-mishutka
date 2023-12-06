@@ -124,7 +124,7 @@ namespace ConsoleApp1
             staplesRightM.DrawVertexBufferObject(PrimitiveType.LineLoop);
             staplesLeftM.DrawVertexBufferObject(PrimitiveType.LineLoop);
             line.DrawVertexBufferObject(PrimitiveType.LineStrip);
-            //grid.DrawGrid();
+            grid.DrawGrid();
             SwapBuffers();
             base.OnRenderFrame(args);
         }
