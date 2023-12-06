@@ -41,6 +41,7 @@
             this.button_level1.TabIndex = 0;
             this.button_level1.Text = "Уровень 1";
             this.button_level1.UseVisualStyleBackColor = true;
+            this.button_level1.Click += new System.EventHandler(this.button_level1_Click);
             // 
             // button_level2
             // 
@@ -70,6 +71,7 @@
             this.Controls.Add(this.button_level1);
             this.Name = "Levels";
             this.Text = "Levels";
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.Levels_FormClosed);
             this.ResumeLayout(false);
 
         }

@@ -23,5 +23,10 @@ namespace Launcher
             levels.Show();
             this.Hide();
         }
+
+        private void Menu_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            Application.Exit();
+        }
     }
 }

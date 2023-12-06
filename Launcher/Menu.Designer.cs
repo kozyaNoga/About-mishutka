@@ -41,14 +41,15 @@
             this.Play.UseVisualStyleBackColor = true;
             this.Play.Click += new System.EventHandler(this.Play_Click);
             // 
-            // Form1
+            // Menu
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
             this.Controls.Add(this.Play);
-            this.Name = "Form1";
+            this.Name = "Menu";
             this.Text = "Form1";
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.Menu_FormClosed);
             this.ResumeLayout(false);
 
         }
