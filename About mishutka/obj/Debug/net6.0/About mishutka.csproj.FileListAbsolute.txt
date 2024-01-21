@@ -29,3 +29,4 @@ C:\Users\shlon\source\repos\About mishutka\About mishutka\obj\Debug\net6.0\refin
 C:\Users\shlon\source\repos\About mishutka\About mishutka\obj\Debug\net6.0\About mishutka.pdb
 C:\Users\shlon\source\repos\About mishutka\About mishutka\obj\Debug\net6.0\About mishutka.genruntimeconfig.cache
 C:\Users\shlon\source\repos\About mishutka\About mishutka\obj\Debug\net6.0\ref\About mishutka.dll
+C:\Users\shlon\source\repos\About mishutka\About mishutka\obj\Debug\net6.0\About mishutka.sourcelink.json
