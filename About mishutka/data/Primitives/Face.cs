@@ -7,8 +7,11 @@ using About_mishutka.data.Models;
 
 namespace About_mishutka.data.Primitives
 {
-    class Face : EBOModel
+    class Face : VAOModel
     {
-
+        public Face(float[] data)
+        {
+            vertices = data;
+        }
     }
 }
