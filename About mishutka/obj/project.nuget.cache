@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "VOBSzPYaI3iygUvMbD7ZXp70xx+MnoQxKkFrkfxn+B8Hi10SxMR7p5tili9KnPO/bMyNEjRATkHf0oMRQ1wATQ==",
+  "dgSpecHash": "ayYOsMzBapDHfSyQUOkd/8fD8D1Xi1SZ/avHXrsLhKEnJ8siow5111S9Pgj4WQGwyL0McgbjBG2QXmQG8ClTMw==",
   "success": true,
   "projectFilePath": "C:\\Users\\shlon\\source\\repos\\About mishutka\\About mishutka\\About mishutka.csproj",
   "expectedPackageFiles": [
@@ -15,6 +15,7 @@
     "C:\\Users\\shlon\\.nuget\\packages\\opentk.windowing.common\\4.8.1\\opentk.windowing.common.4.8.1.nupkg.sha512",
     "C:\\Users\\shlon\\.nuget\\packages\\opentk.windowing.desktop\\4.8.1\\opentk.windowing.desktop.4.8.1.nupkg.sha512",
     "C:\\Users\\shlon\\.nuget\\packages\\opentk.windowing.graphicslibraryframework\\4.8.1\\opentk.windowing.graphicslibraryframework.4.8.1.nupkg.sha512",
+    "C:\\Users\\shlon\\.nuget\\packages\\stbimagesharp\\2.27.13\\stbimagesharp.2.27.13.nupkg.sha512",
     "C:\\Users\\shlon\\.nuget\\packages\\system.runtime.compilerservices.unsafe\\5.0.0\\system.runtime.compilerservices.unsafe.5.0.0.nupkg.sha512"
   ],
   "logs": []

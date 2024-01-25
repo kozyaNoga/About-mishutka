@@ -14,70 +14,52 @@ using About_mishutka.data.Primitives;
 using About_mishutka.data.Models;
 using About_mishutka.data.Staples;
 using About_mishutka;
+using System.Diagnostics;
+using About_mishutka.data.Textures;
 
 namespace ConsoleApp1
 {
     public class Game : GameWindow
     {
+
+        private Stopwatch _timer;
         private float sec = 0.0f;
         private int fps;
 
-        ShaderTK _shader;
+        Shader _shader1;
+        Shader _shader2;
+        Texture _texture;
 
-        Face Tringle = new Face(new float[] {
-                                                -0.5f, -0.5f, 0.0f, 
-                                                0.5f, -0.5f, 0.0f, 
-                                                0.0f, 0.5f, 0.0f  
-                                                });
-        /*
-        Point point = new Point(0.0f, 0.0f, 0.0f);
-        Staples staplesLeft = new Staples(new float[]
-            { -0.04f+0.83f, 0.0f+0.61f, 0.0f,
-              -0.08f+0.83f, 0.0f+0.61f, 0.0f,
-              -0.08f+0.83f, 0.3f+0.61f, 0.0f,
-              -0.04f+0.83f, 0.3f+0.61f, 0.0f,
-              -0.04f+0.83f, 0.29f+0.61f, 0.0f,
-              -0.07f+0.83f, 0.29f+0.61f, 0.0f,
-              -0.07f+0.83f, 0.01f+0.61f, 0.0f,
-              -0.04f+0.83f, 0.01f+0.61f, 0.0f,}, 8);
-        Staples staplesRight = new Staples(new float[]
-            { 0.04f+0.83f, 0.0f+0.61f, 0.0f,
-              0.08f+0.83f, 0.0f+0.61f, 0.0f,
-              0.08f+0.83f, 0.3f+0.61f, 0.0f,
-              0.04f+0.83f, 0.3f+0.61f, 0.0f,
-              0.04f+0.83f, 0.29f+0.61f, 0.0f,
-              0.07f+0.83f, 0.29f+0.61f, 0.0f,
-              0.07f+0.83f, 0.01f+0.61f, 0.0f,
-              0.04f+0.83f, 0.01f+0.61f, 0.0f}, 8);
-        Staples staplesLeftM = new Staples(new float[]
-            { -0.11f+0.55f, 0.0f+0.61f, 0.0f,
-              -0.14f+0.55f, 0.0f+0.61f, 0.0f,
-              -0.14f+0.55f, 0.3f+0.61f, 0.0f,
-              -0.11f+0.55f, 0.3f+0.61f, 0.0f,
-              -0.11f+0.55f, 0.29f+0.61f, 0.0f,
-              -0.13f+0.55f, 0.29f+0.61f, 0.0f,
-              -0.13f+0.55f, 0.01f+0.61f, 0.0f,
-              -0.11f+0.55f, 0.01f+0.61f, 0.0f}, 8);
-        Staples staplesRightM = new Staples(new float[]
-            {  0.11f+0.55f, 0.0f+0.61f, 0.0f,
-               0.14f+0.55f, 0.0f+0.61f, 0.0f,
-               0.14f+0.55f, 0.3f+0.61f, 0.0f,
-               0.11f+0.55f, 0.3f+0.61f, 0.0f,
-               0.11f+0.55f, 0.29f+0.61f, 0.0f,
-               0.13f+0.55f, 0.29f+0.61f, 0.0f,
-               0.13f+0.55f, 0.01f+0.61f, 0.0f,
-               0.11f+0.55f, 0.01f+0.61f, 0.0f}, 8);
-        Grid grid = new Grid();
-        Staples line = new Staples(new float[]
-           { 0.4f, 0.6f, 0.0f,
-             0.2f, 0.0f, 0.0f
-              }, 2);
-
-
+        Face Tringle1 = new Face(
+            new float[] 
+            {
+                0.2f, 0.2f, 0.0f, 1.0f, 1.0f,
+                -0.2f, 0.2f, 0.0f, 0.0f, 1.0f,
+                -0.2f, -0.2f, 0.0f, 0.0f, 0.0f,
+                0.2f, -0.2f, 0.0f, 1.0f, 0.0f
+            },
+            new uint[]
+            {
+                0, 1, 2,
+                3, 0, 2
+            });
+        Face Tringle2 = new Face(
+            new float[]
+            {
+                0.2f-0.5f, 0.2f, 0.0f, 1.0f, 1.0f,
+                -0.2f-0.5f, 0.2f, 0.0f, 0.0f, 1.0f,
+                -0.2f-0.5f, -0.2f, 0.0f, 0.0f, 0.0f,
+                0.2f-0.5f, -0.2f, 0.0f, 1.0f, 0.0f
+            },
+            new uint[]
+            {
+                0, 1, 2,
+                3, 0, 2
+            });
 
         KeyboardState input_coordinat; //Информация о нажатых клавишах.
         private bool KeyPressedOff = true; //индекатор о том, что клавиша была отжата.
-        */
+        
         public Game(GameWindowSettings GWsettings, NativeWindowSettings NWsettings) : base(GWsettings, NWsettings)
         {
             VSync = VSyncMode.On;
@@ -85,25 +67,27 @@ namespace ConsoleApp1
         protected override void OnLoad()
         {
             base.OnLoad();
-            GL.ClearColor(0.2f, 0.3f, 0.3f, 1.0f);
-            GL.Enable(EnableCap.CullFace);
-            GL.CullFace(CullFaceMode.Back);
+            GL.ClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+            // GL.Enable(EnableCap.CullFace);
+            // GL.CullFace(CullFaceMode.Back);
 
-            Tringle.CreateVAO();
+            _shader1 = new Shader("Shaders/Base1.vert", "Shaders/Base1.frag");
 
-            _shader = new ShaderTK("Shaders/Base.vert", "Shaders/Base.frag");
-            _shader.Use();
+            Tringle1.CreateEBO();
+            _shader1.Use();
+
+            var vertexLocation = _shader1.GetAttribLocation("aPosition");
+            GL.EnableVertexAttribArray(vertexLocation);
+            GL.VertexAttribPointer(vertexLocation, 3, VertexAttribPointerType.Float, false, 5 * sizeof(float), 0);
+
+            var texCoordLocation = _shader1.GetAttribLocation("aTexCoord");
+            GL.EnableVertexAttribArray(texCoordLocation);
+            GL.VertexAttribPointer(texCoordLocation, 2, VertexAttribPointerType.Float, false, 5 * sizeof(float), 3 * sizeof(float));
 
 
-            /*
-            point.initVertexBufferObject();
-            staplesLeft.initVertexBufferObject();
-            staplesRight.initVertexBufferObject();
-            staplesRightM.initVertexBufferObject();
-            staplesLeftM.initVertexBufferObject();
-            line.initVertexBufferObject();
-            grid.InitGrid();
-            */
+            _texture = new Texture("images/img1.png");
+            _texture.Use(TextureUnit.Texture0);
+            
         }
         protected override void OnResize(ResizeEventArgs e)
         {
@@ -114,7 +98,7 @@ namespace ConsoleApp1
             sec += (float)args.Time;
             if (sec >= 1.0f)
             {
-                Title = $"Linear Algebra: fps - {(float)fps}";
+                Title = $"Posidon's Creation: fps - {(float)fps}";
                 fps = 0;
                 sec = 0.0f;
             }
@@ -133,26 +117,26 @@ namespace ConsoleApp1
                 KeyPressedOff = false;
             }
            
-            if (!input_coordinat.IsAnyKeyDown) KeyPressedOff = true;
+            if (!input_coordinat.IsAnyKeyDown) KeyPressedOff = true; 
             */
-
             base.OnUpdateFrame(args);
         }
         protected override void OnRenderFrame(FrameEventArgs args)
         {
             GL.Clear(ClearBufferMask.ColorBufferBit);
-            /*
-            point.DrawVertexBufferObject(PrimitiveType.TriangleFan);
-            staplesLeft.DrawVertexBufferObject(PrimitiveType.LineLoop);
-            staplesRight.DrawVertexBufferObject(PrimitiveType.LineLoop);
-            staplesRightM.DrawVertexBufferObject(PrimitiveType.LineLoop);
-            staplesLeftM.DrawVertexBufferObject(PrimitiveType.LineLoop);
-            line.DrawVertexBufferObject(PrimitiveType.LineStrip);
-            grid.DrawGrid();
-            */
-            Tringle.DrawVertexArrayObject();
-            _shader.Use();
 
+
+            
+            Tringle1.DrawEBO();
+            
+            //Tringle2.DrawEBO();
+            //_shader2.Use();
+
+
+            //_shader2.Use();
+
+
+            //_shader2.Use();
 
 
             SwapBuffers();
@@ -160,7 +144,9 @@ namespace ConsoleApp1
         }
         protected override void OnUnload()
         {
-            _shader.Dispose();
+            Tringle1.DeleteEBO();
+            Tringle2.DeleteEBO();
+            _shader1.Dispose();
             base.OnUnload();
         }
     }

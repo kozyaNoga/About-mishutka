@@ -3,68 +3,95 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using OpenTK.Graphics.OpenGL4;
-//Не понятно
+using OpenTK.Graphics.OpenGL;
+
 namespace About_mishutka
 {
-    class Shader
+    public class Shader
     {
-        private readonly int vertexShader = 0;
-        private readonly int fragmentShader = 0;
-        private readonly int programShader = 0;
-        public Shader(string vertexFile, string fragmentFile) 
+        public readonly int Handle;
+
+        public Shader(string vertexPath, string fragmentPath)
         {
-            vertexShader = CreateShader(ShaderType.VertexShader, vertexFile);
-            fragmentShader = CreateShader(ShaderType.FragmentShader, fragmentFile);
+            int VertexShader;
+            int FragmentShader;
 
-            programShader = GL.CreateProgram();
-            GL.AttachShader(programShader, vertexShader);
-            GL.AttachShader(programShader, fragmentShader);
+            string VertexShaderSource = File.ReadAllText(vertexPath);
 
-            GL.LinkProgram(programShader);
-            GL.GetProgram(programShader, GetProgramParameterName.LinkStatus, out int code);
-            if (code != (int)All.True)
+            string FragmentShaderSource = File.ReadAllText(fragmentPath);
+
+            VertexShader = GL.CreateShader(ShaderType.VertexShader);
+            GL.ShaderSource(VertexShader, VertexShaderSource);
+
+            FragmentShader = GL.CreateShader(ShaderType.FragmentShader);
+            GL.ShaderSource(FragmentShader, FragmentShaderSource);
+
+            GL.CompileShader(VertexShader);
+
+            GL.GetShader(VertexShader, ShaderParameter.CompileStatus, out int success);
+            if (success == 0)
             {
-                var infolog = GL.GetProgramInfoLog(programShader);
-                throw new Exception($"Ошибка при компиляции {programShader} \n\n {infolog}");
+                string infoLog = GL.GetShaderInfoLog(VertexShader);
+                Console.WriteLine(infoLog);
             }
 
-            DeleteShader(vertexShader); 
-            DeleteShader(fragmentShader);
-        }
+            GL.CompileShader(FragmentShader);
 
-        public void ActiveProgram()
-        {
-            GL.UseProgram(programShader);
-        }
-        public void DeactiveProgram()
-        {
-            GL.UseProgram(0);
-        }
-        public void DeleteProgram()
-        {
-            GL.DeleteProgram(programShader);
-        }
-        private int CreateShader(ShaderType shaderType, string shaderFile)
-        {
-            string shaderCode = File.ReadAllText(shaderFile);
-            int shaderId = GL.CreateShader(shaderType);
-            GL.ShaderSource(shaderId, shaderCode);
-            GL.CompileShader(shaderId);
-
-            GL.GetShader(shaderId, ShaderParameter.CompileStatus, out int code);
-            if(code != (int)All.True)
+            GL.GetShader(FragmentShader, ShaderParameter.CompileStatus, out int success1);
+            if (success1 == 0)
             {
-                var infolog = GL.GetShaderInfoLog(shaderId);
-                throw new Exception($"Ошибка при компиляции {shaderId} \n\n {infolog}");
+                string infoLog = GL.GetShaderInfoLog(FragmentShader);
+                Console.WriteLine(infoLog);
+
             }
-            return shaderId;
+
+            Handle = GL.CreateProgram();
+
+            GL.AttachShader(Handle, VertexShader);
+            GL.AttachShader(Handle, FragmentShader);
+
+            GL.LinkProgram(Handle);
+
+            GL.GetProgram(Handle, GetProgramParameterName.LinkStatus, out int success2);
+            if (success2 == 0)
+            {
+                string infoLog = GL.GetProgramInfoLog(Handle);
+                Console.WriteLine(infoLog);
+            }
+
+            GL.DetachShader(Handle, VertexShader);
+            GL.DetachShader(Handle, FragmentShader);
+            GL.DeleteShader(FragmentShader);
+            GL.DeleteShader(VertexShader);
         }
 
-        private void DeleteShader(int shader)
+        public void Use()
         {
-            GL.DetachShader(programShader, shader);
-            GL.DeleteShader(shader);
+
+            GL.UseProgram(Handle);
+        }
+
+        public int GetAttribLocation(string attribName)
+        {
+            return GL.GetAttribLocation(Handle, attribName);
+        }
+
+        private bool disposedValue = false;
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (!disposedValue)
+            {
+                GL.DeleteProgram(Handle);
+
+                disposedValue = true;
+            }
+        }
+
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
         }
     }
 }
