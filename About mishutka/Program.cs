@@ -28,8 +28,40 @@ namespace ConsoleApp1
 
         Shader _shader1;
         Shader _shader2;
-        Texture _texture;
+        Texture _texture1;
+        Texture _texture2;
+        int vao1;
+        int vbo1;
+        int ebo1;
+        float[] vertices1 = new float[]
+            {
+                0.2f-0.5f, 0.2f, 0.0f, 1.0f, 1.0f,
+                -0.2f-0.5f, 0.2f, 0.0f, 0.0f, 1.0f,
+                -0.2f-0.5f, -0.2f, 0.0f, 0.0f, 0.0f,
+                0.2f-0.5f, -0.2f, 0.0f, 1.0f, 0.0f
+            };
+        uint[] indices1 = new uint[]
+            {
+                0, 1, 2,
+                3, 0, 2
+            };
 
+        int vao2;
+        int vbo2;
+        int ebo2;
+        float[] vertices2 = new float[]
+            {
+                0.2f, 0.2f, 0.0f, 1.0f, 1.0f,
+                -0.2f, 0.2f, 0.0f, 0.0f, 1.0f,
+                -0.2f, -0.2f, 0.0f, 0.0f, 0.0f,
+                0.2f, -0.2f, 0.0f, 1.0f, 0.0f
+            };
+        uint[] indices2 = new uint[]
+            {
+                0, 1, 2,
+                3, 0, 2
+            };
+        /*
         Face Tringle1 = new Face(
             new float[] 
             {
@@ -56,6 +88,7 @@ namespace ConsoleApp1
                 0, 1, 2,
                 3, 0, 2
             });
+        */
 
         KeyboardState input_coordinat; //Информация о нажатых клавишах.
         private bool KeyPressedOff = true; //индекатор о том, что клавиша была отжата.
@@ -67,13 +100,23 @@ namespace ConsoleApp1
         protected override void OnLoad()
         {
             base.OnLoad();
-            GL.ClearColor(0.0f, 0.0f, 0.0f, 1.0f);
-            // GL.Enable(EnableCap.CullFace);
-            // GL.CullFace(CullFaceMode.Back);
+            GL.ClearColor(0.2f, 0.3f, 0.3f, 1.0f);
+            GL.Enable(EnableCap.CullFace);
+            GL.CullFace(CullFaceMode.Back);
+
+            vao1 = GL.GenVertexArray();
+            vbo1 = GL.GenBuffer();
+            ebo1 = GL.GenBuffer();
+
+            GL.BindVertexArray(vao1);
+            GL.BindBuffer(BufferTarget.ArrayBuffer, vbo1);
+            GL.BufferData(BufferTarget.ArrayBuffer, vertices1.Length * sizeof(float), vertices1, BufferUsageHint.StaticDraw);
+            GL.BindBuffer(BufferTarget.ElementArrayBuffer, ebo1);
+            GL.BufferData(BufferTarget.ElementArrayBuffer, indices1.Length * sizeof(uint), indices1, BufferUsageHint.StaticDraw);
+
+            GL.BindBuffer(BufferTarget.ArrayBuffer, vbo1);
 
             _shader1 = new Shader("Shaders/Base1.vert", "Shaders/Base1.frag");
-
-            Tringle1.CreateEBO();
             _shader1.Use();
 
             var vertexLocation = _shader1.GetAttribLocation("aPosition");
@@ -84,10 +127,31 @@ namespace ConsoleApp1
             GL.EnableVertexAttribArray(texCoordLocation);
             GL.VertexAttribPointer(texCoordLocation, 2, VertexAttribPointerType.Float, false, 5 * sizeof(float), 3 * sizeof(float));
 
+            _texture1 = new Texture("images/img1.png");
+            //_texture1.Use(TextureUnit.Texture0);
 
-            _texture = new Texture("images/img1.png");
-            _texture.Use(TextureUnit.Texture0);
-            
+            _texture2 = new Texture("images/img.png");
+            //_texture2.Use(TextureUnit.Texture0);
+
+            GL.BindVertexArray(0);
+
+            vao2 = GL.GenVertexArray();
+            vbo2 = GL.GenBuffer();
+            ebo2 = GL.GenBuffer();
+
+            GL.BindVertexArray(vao2);
+            GL.BindBuffer(BufferTarget.ArrayBuffer, vbo2);
+            GL.BufferData(BufferTarget.ArrayBuffer, vertices2.Length * sizeof(float), vertices2, BufferUsageHint.StaticDraw);
+            GL.BindBuffer(BufferTarget.ElementArrayBuffer, ebo2);
+            GL.BufferData(BufferTarget.ElementArrayBuffer, indices2.Length * sizeof(uint), indices2, BufferUsageHint.StaticDraw);
+
+            GL.EnableVertexAttribArray(vertexLocation);
+            GL.VertexAttribPointer(vertexLocation, 3, VertexAttribPointerType.Float, false, 5 * sizeof(float), 0);
+
+            GL.EnableVertexAttribArray(texCoordLocation);
+            GL.VertexAttribPointer(texCoordLocation, 2, VertexAttribPointerType.Float, false, 5 * sizeof(float), 3 * sizeof(float));
+
+            GL.BindVertexArray(0);
         }
         protected override void OnResize(ResizeEventArgs e)
         {
@@ -125,27 +189,26 @@ namespace ConsoleApp1
         {
             GL.Clear(ClearBufferMask.ColorBufferBit);
 
-
+            GL.BindVertexArray(vao2);
             
-            Tringle1.DrawEBO();
-            
-            //Tringle2.DrawEBO();
-            //_shader2.Use();
+            _texture2.Use(TextureUnit.Texture0);
+            //_shader1.Use();
 
+            GL.DrawElements(PrimitiveType.Triangles, indices1.Length, DrawElementsType.UnsignedInt, 0);
 
-            //_shader2.Use();
+            GL.BindVertexArray(vao1);
 
+            _texture1.Use(TextureUnit.Texture0);
+            //_shader1.Use();
 
-            //_shader2.Use();
-
+            GL.DrawElements(PrimitiveType.Triangles, indices1.Length, DrawElementsType.UnsignedInt, 0);
 
             SwapBuffers();
             base.OnRenderFrame(args);
         }
         protected override void OnUnload()
         {
-            Tringle1.DeleteEBO();
-            Tringle2.DeleteEBO();
+
             _shader1.Dispose();
             base.OnUnload();
         }
